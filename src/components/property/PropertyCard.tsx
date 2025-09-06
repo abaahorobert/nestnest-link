@@ -1,130 +1,150 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MapPin, Bed, Bath, Square, Heart, Eye } from "lucide-react";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Property } from '../../types';
+import { MapPin, Bed, Bath, Square, Heart, Star } from 'lucide-react';
 
 interface PropertyCardProps {
-  id: string;
-  title: string;
-  price: string;
-  location: string;
-  type: string;
-  status: "For Sale" | "For Rent" | "Sold" | "Rented";
-  bedrooms: number;
-  bathrooms: number;
-  area: string;
-  image: string;
-  isLiked?: boolean;
-  onLike?: () => void;
-  onView?: () => void;
+  property: Property;
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({
-  title,
-  price,
-  location,
-  type,
-  status,
-  bedrooms,
-  bathrooms,
-  area,
-  image,
-  isLiked = false,
-  onLike,
-  onView,
-}) => {
-  const getStatusVariant = (status: string) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const formatPrice = (price: number) => {
+    if (price >= 1000000) {
+      return `UGX ${(price / 1000000).toFixed(1)}M`;
+    }
+    return `UGX ${price.toLocaleString()}`;
+  };
+
+  const getStatusColor = (status: string) => {
     switch (status) {
-      case "For Sale":
-        return "default";
-      case "For Rent":
-        return "secondary";
-      case "Sold":
-        return "destructive";
-      case "Rented":
-        return "outline";
-      default:
-        return "default";
+      case 'for-sale': return 'bg-green-100 text-green-800';
+      case 'for-rent': return 'bg-blue-100 text-blue-800';
+      case 'sold': return 'bg-gray-100 text-gray-800';
+      case 'rented': return 'bg-purple-100 text-purple-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'for-sale': return 'For Sale';
+      case 'for-rent': return 'For Rent';
+      case 'sold': return 'Sold';
+      case 'rented': return 'Rented';
+      default: return status;
+    }
+  };
+
+  const getPropertyTypeIcon = (type: string) => {
+    // You could add specific icons for different property types
+    return null;
+  };
+
   return (
-    <Card className="group overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 animate-luxury">
+    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+      {/* Image Container */}
       <div className="relative overflow-hidden">
         <img
-          src={image}
-          alt={title}
-          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          src={property.images[0]}
+          alt={property.title}
+          className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className="absolute top-3 left-3">
-          <Badge variant={getStatusVariant(status)} className="font-medium">
-            {status}
-          </Badge>
+        
+        {/* Status Badge */}
+        <div className="absolute top-4 left-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(property.status)}`}>
+            {getStatusText(property.status)}
+          </span>
         </div>
-        <div className="absolute top-3 right-3 flex space-x-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 bg-background/80 hover:bg-background"
-            onClick={onLike}
-          >
-            <Heart
-              className={`h-4 w-4 ${
-                isLiked ? "fill-accent text-accent" : "text-muted-foreground"
-              }`}
-            />
-          </Button>
-        </div>
-        <div className="absolute bottom-3 right-3">
-          <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md font-semibold text-lg">
-            {price}
+
+        {/* Favorite Button */}
+        <button className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200">
+          <Heart className="h-4 w-4 text-gray-600 hover:text-red-500" />
+        </button>
+
+        {/* Image Count */}
+        {property.images.length > 1 && (
+          <div className="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded-lg text-xs">
+            +{property.images.length - 1} photos
           </div>
-        </div>
+        )}
       </div>
 
-      <CardContent className="p-4">
-        <div className="mb-2">
-          <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-            {title}
+      {/* Content */}
+      <div className="p-6">
+        {/* Price */}
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-2xl font-bold text-gray-900">
+            {formatPrice(property.price)}
           </h3>
-          <div className="flex items-center text-muted-foreground text-sm mt-1">
-            <MapPin className="h-4 w-4 mr-1" />
-            {location}
+          <div className="text-xs text-gray-500 capitalize">
+            {property.propertyType}
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+        {/* Title */}
+        <Link 
+          to={`/properties/${property.id}`}
+          className="block"
+        >
+          <h4 className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-200 mb-2 line-clamp-2">
+            {property.title}
+          </h4>
+        </Link>
+
+        {/* Location */}
+        <div className="flex items-center text-gray-600 mb-4">
+          <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+          <span className="text-sm truncate">
+            {property.location.district}, {property.location.city}
+          </span>
+        </div>
+
+        {/* Property Details */}
+        <div className="flex items-center justify-between text-gray-600 text-sm mb-4">
           <div className="flex items-center space-x-4">
-            {bedrooms > 0 && (
+            {property.bedrooms && (
               <div className="flex items-center">
                 <Bed className="h-4 w-4 mr-1" />
-                {bedrooms} bed
+                <span>{property.bedrooms}</span>
               </div>
             )}
-            {bathrooms > 0 && (
+            {property.bathrooms && (
               <div className="flex items-center">
                 <Bath className="h-4 w-4 mr-1" />
-                {bathrooms} bath
+                <span>{property.bathrooms}</span>
               </div>
             )}
             <div className="flex items-center">
               <Square className="h-4 w-4 mr-1" />
-              {area}
+              <span>{property.area} sqm</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
-          <Badge variant="outline" className="text-xs">
-            {type}
-          </Badge>
-          <Button variant="default" size="sm" onClick={onView}>
-            <Eye className="h-4 w-4 mr-1" />
+        {/* Agent Info */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <div className="flex items-center">
+            <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-3">
+              <span className="text-white text-xs font-semibold">
+                {property.agent.name.charAt(0)}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-900">{property.agent.name}</p>
+              <p className="text-xs text-gray-500">Agent</p>
+            </div>
+          </div>
+          
+          <Link
+            to={`/properties/${property.id}`}
+            className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+          >
             View Details
-          </Button>
+          </Link>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
