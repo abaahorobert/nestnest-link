@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SearchFilters } from '../../types';
-import { Search, Filter, SlidersHorizontal, X } from 'lucide-react';
+import { Search, SlidersHorizontal, X } from 'lucide-react';
 
 interface PropertySearchProps {
   filters: SearchFilters;

@@ -1,8 +1,8 @@
-import Header from "@/components/layout/Header";
-import HeroSection from "@/components/sections/HeroSection";
-import SearchFilters from "@/components/search/SearchFilters";
-import FeaturedProperties from "@/components/sections/FeaturedProperties";
-import Footer from "@/components/sections/Footer";
+import Header from "../components/layout/Header";
+import HeroSection from "../components/sections/HeroSection";
+import SearchFilters from "../components/search/SearchFilters";
+import FeaturedProperties from "../components/sections/FeaturedProperties";
+import Footer from "../components/sections/Footer";
 
 const Index = () => {
   const handleSearch = (filters: any) => {

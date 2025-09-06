@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (email: string, password: string) => {
     try {
       // Mock API call - in production, this would be an actual API call
-      const response = await mockApiCall('/auth/login', { email, password });
+      const response: any = await mockApiCall('/auth/login', { email, password });
       
       const { user, token } = response.data;
       
@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (userData: Partial<User> & { password: string }) => {
     try {
       // Mock API call
-      const response = await mockApiCall('/auth/register', userData);
+      const response: any = await mockApiCall('/auth/register', userData);
       
       const { user, token } = response.data;
       

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Card, CardContent } from "../ui/card";
 import { Search, Filter, MapPin, DollarSign } from "lucide-react";
 
 interface SearchFiltersProps {
@@ -68,7 +68,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
             <Input
               placeholder="Search properties..."
               value={filters.query}
-              onChange={(e) => handleFilterChange("query", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("query", e.target.value)}
               className="pl-10"
             />
           </div>
@@ -77,7 +77,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
             <Input
               placeholder="Location"
               value={filters.location}
-              onChange={(e) => handleFilterChange("location", e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("location", e.target.value)}
               className="pl-10"
             />
           </div>
@@ -89,7 +89,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
 
         {/* Quick Filters */}
         <div className="flex flex-wrap gap-3 mb-4">
-          <Select value={filters.type} onValueChange={(value) => handleFilterChange("type", value)}>
+          <Select value={filters.type} onValueChange={(value: string) => handleFilterChange("type", value)}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Type" />
             </SelectTrigger>
@@ -103,7 +103,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
             </SelectContent>
           </Select>
 
-          <Select value={filters.status} onValueChange={(value) => handleFilterChange("status", value)}>
+          <Select value={filters.status} onValueChange={(value: string) => handleFilterChange("status", value)}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -139,7 +139,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
                   <Input
                     placeholder="Min"
                     value={filters.minPrice}
-                    onChange={(e) => handleFilterChange("minPrice", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("minPrice", e.target.value)}
                     className="pl-10"
                   />
                 </div>
@@ -148,7 +148,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
                   <Input
                     placeholder="Max"
                     value={filters.maxPrice}
-                    onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFilterChange("maxPrice", e.target.value)}
                     className="pl-10"
                   />
                 </div>
@@ -157,7 +157,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">Bedrooms</label>
-              <Select value={filters.bedrooms} onValueChange={(value) => handleFilterChange("bedrooms", value)}>
+              <Select value={filters.bedrooms} onValueChange={(value: string) => handleFilterChange("bedrooms", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Any" />
                 </SelectTrigger>
@@ -174,7 +174,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
 
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">Bathrooms</label>
-              <Select value={filters.bathrooms} onValueChange={(value) => handleFilterChange("bathrooms", value)}>
+              <Select value={filters.bathrooms} onValueChange={(value: string) => handleFilterChange("bathrooms", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Any" />
                 </SelectTrigger>

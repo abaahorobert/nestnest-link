@@ -1,14 +1,11 @@
-import { useState } from "react";
-import PropertyCard from "@/components/property/PropertyCard";
-import { Button } from "@/components/ui/button";
+import PropertyCard from "../property/PropertyCard";
+import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
+import property1 from "../../assets/property-1.jpg";
+import property2 from "../../assets/property-2.jpg";
+import property3 from "../../assets/property-3.jpg";
 
 const FeaturedProperties = () => {
-  const [likedProperties, setLikedProperties] = useState<Set<string>>(new Set());
-
   const properties = [
     {
       id: "1",
@@ -48,20 +45,6 @@ const FeaturedProperties = () => {
     },
   ];
 
-  const handleLike = (propertyId: string) => {
-    const newLiked = new Set(likedProperties);
-    if (newLiked.has(propertyId)) {
-      newLiked.delete(propertyId);
-    } else {
-      newLiked.add(propertyId);
-    }
-    setLikedProperties(newLiked);
-  };
-
-  const handleView = (propertyId: string) => {
-    console.log("View property:", propertyId);
-  };
-
   return (
     <section className="py-16 bg-secondary/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,15 +58,47 @@ const FeaturedProperties = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {properties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              {...property}
-              isLiked={likedProperties.has(property.id)}
-              onLike={() => handleLike(property.id)}
-              onView={() => handleView(property.id)}
-            />
-          ))}
+          {properties.map((property) => {
+            // Convert our property format to match PropertyCard's expected Property interface
+            const propertyForCard = {
+              id: property.id,
+              title: property.title,
+              description: property.title, // Using title as description for now
+              location: {
+                city: property.location.split(', ')[1] || property.location,
+                district: property.location.split(', ')[0] || property.location,
+                address: property.location,
+              },
+              price: parseInt(property.price.replace(/[$,]/g, '')),
+              propertyType: property.type.toLowerCase() as any,
+              status: property.status.toLowerCase().replace(' ', '-') as any,
+              images: [property.image],
+              agentId: "agent-1",
+              agent: {
+                id: "agent-1",
+                name: "John Doe",
+                email: "john@example.com",
+                phone: "+1234567890",
+                role: "agent" as const,
+                isVerified: true,
+                createdAt: new Date().toISOString(),
+              },
+              isApproved: true,
+              bedrooms: property.bedrooms,
+              bathrooms: property.bathrooms,
+              area: parseInt(property.area.replace(/[^\d]/g, '')),
+              amenities: [],
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+            
+            return (
+              <PropertyCard
+                key={property.id}
+                property={propertyForCard}
+              />
+            );
+          })}
         </div>
 
         <div className="text-center">

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import PropertyCard from '../components/Property/PropertyCard';
+import PropertyCard from '../components/property/PropertyCard';
 import { mockProperties } from '../data/mockData';
 import { Search, TrendingUp, Shield, Users, ArrowRight, Play, Star, CheckCircle } from 'lucide-react';
 
 const Home: React.FC = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
 
   const featuredProperties = mockProperties.slice(0, 3);

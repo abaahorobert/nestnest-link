@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { mockProperties } from '../data/mockData';
 import { SearchFilters } from '../types';
-import PropertySearch from '../components/Property/PropertySearch';
-import PropertyCard from '../components/Property/PropertyCard';
+import PropertySearch from '../components/property/PropertySearch';
+import PropertyCard from '../components/property/PropertyCard';
 import { Grid, List } from 'lucide-react';
 
 const Properties: React.FC = () => {

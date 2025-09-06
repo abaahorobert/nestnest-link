@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Property } from '../../types';
-import { MapPin, Bed, Bath, Square, Heart, Star } from 'lucide-react';
+import { MapPin, Bed, Bath, Square, Heart } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -35,10 +35,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
     }
   };
 
-  const getPropertyTypeIcon = (type: string) => {
-    // You could add specific icons for different property types
-    return null;
-  };
 
   return (
     <div className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
