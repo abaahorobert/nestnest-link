@@ -24,12 +24,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
   const [filters, setFilters] = useState<SearchFilters>({
     query: "",
     location: "",
-    type: "",
-    status: "",
+    type: "all",
+    status: "all",
     minPrice: "",
     maxPrice: "",
-    bedrooms: "",
-    bathrooms: "",
+    bedrooms: "any",
+    bathrooms: "any",
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -47,12 +47,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
     const resetFilters: SearchFilters = {
       query: "",
       location: "",
-      type: "",
-      status: "",
+      type: "all",
+      status: "all",
       minPrice: "",
       maxPrice: "",
-      bedrooms: "",
-      bathrooms: "",
+      bedrooms: "any",
+      bathrooms: "any",
     };
     setFilters(resetFilters);
     onSearch?.(resetFilters);
@@ -94,7 +94,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
               <SelectValue placeholder="Type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Types</SelectItem>
+              <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="apartment">Apartment</SelectItem>
               <SelectItem value="house">House</SelectItem>
               <SelectItem value="condo">Condo</SelectItem>
@@ -108,7 +108,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Status</SelectItem>
+              <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="for-sale">For Sale</SelectItem>
               <SelectItem value="for-rent">For Rent</SelectItem>
             </SelectContent>
@@ -162,7 +162,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
                   <SelectValue placeholder="Any" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Any</SelectItem>
+                  <SelectItem value="any">Any</SelectItem>
                   <SelectItem value="1">1+</SelectItem>
                   <SelectItem value="2">2+</SelectItem>
                   <SelectItem value="3">3+</SelectItem>
@@ -179,7 +179,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onSearch }) => {
                   <SelectValue placeholder="Any" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Any</SelectItem>
+                  <SelectItem value="any">Any</SelectItem>
                   <SelectItem value="1">1+</SelectItem>
                   <SelectItem value="2">2+</SelectItem>
                   <SelectItem value="3">3+</SelectItem>
